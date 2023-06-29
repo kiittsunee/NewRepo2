@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using DotNetApi.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Reflection;
 
@@ -20,7 +21,7 @@ namespace TodoApi.Controllers
 
             return columnName;
         }
-        public DataTable TodoItemTable(List<TodoItem>items)
+        public DataTable TodoItemTable(DbSet<TodoItem> TodoItems)
         {
             DataTable dataTable = new DataTable(typeof(TodoItem).Name);
             PropertyInfo[] Properties = typeof(TodoItem).GetProperties(bindingAttr: BindingFlags.Public | BindingFlags.Instance) ;
@@ -28,7 +29,7 @@ namespace TodoApi.Controllers
             {
                 dataTable.Columns.Add(property.Name);
             }
-            foreach (TodoItem item in items)
+            foreach (TodoItem item in TodoItems)
             {
                 var values = new object[Properties.Length];
                 for(int i=0; i<Properties.Length; i++)

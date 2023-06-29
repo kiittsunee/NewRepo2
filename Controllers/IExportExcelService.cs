@@ -11,6 +11,6 @@ namespace TodoApi.Controllers
     public interface IExportExcelService
     {
         XLWorkbook ExportExcel(DataTable dt, string title = "", string fileName = "");
-        DataTable TodoItemTable(List<TodoItem> items);
+        DataTable TodoItemTable(DbSet<TodoItem> TodoItems);
     }
 }

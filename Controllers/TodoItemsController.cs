@@ -132,14 +132,14 @@ public class TodoItemsController : ControllerBase
     [HttpGet(template:"ExportExcel")]
     public async Task<ActionResult> GetExcel()
     {
+
         ExportExcelService exportExcelService = new ExportExcelService();
-        List<TodoItem> todoItems = new List<TodoItem>();
-        DataTable dt = exportExcelService.TodoItemTable(todoItems);
+        DataTable dt = exportExcelService.TodoItemTable(_context.TodoItems);
         XLWorkbook wb = exportExcelService.ExportExcel(dt, title: "Лабораторная № 1", fileName: "");
-        using (MemoryStream ms = new())
+        using (MemoryStream ms = new MemoryStream())
         {
             wb.SaveAs(ms);
-            return File(fileContents: ms.ToArray(), contentType: "application/vnd.openxmlformats-officedocument.spreadsheetsml.sheet", fileDownloadName: "Labs_TodoItem"); 
+            return File(fileContents: ms.ToArray(), contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileDownloadName: "Labs_TodoItem"); 
         }
 
     }
